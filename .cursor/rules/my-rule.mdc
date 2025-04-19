@@ -1,0 +1,30 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+## Project Tech Stack
+
+This project is built using **Next.js v15.1.7** and **TypeScript**.
+
+- **Styling**: Tailwind CSS and shadcn UI components are used for consistent and scalable styling.
+- **Form Handling**: Forms are built using `react-hook-form` and validated using `zod` schemas.
+- **Backend**: The backend is powered by **Supabase**, handling authentication, database, and server functions.
+
+## Folder Structure Conventions
+
+- **Server Actions**: All backend-related data fetching or mutations are placed under the `serverAction/` folder. Each domain (e.g., user, product) has its own subfolder.
+  
+Example:
+serverAction/ └── userAction.ts
+
+- **Zod Schemas**: All Zod schemas for data validation are organized in the `models/` folder, also by domain.
+
+Example:
+models/ └── user/ └── userSchema.ts
+
+## Best Practices
+
+- Always use `react-hook-form` + `zod` for any form implementation.
+- UI components should follow `shadcn` design system and use Tailwind utility classes.
+- Maintain TypeScript types consistently across all server actions and schemas.
