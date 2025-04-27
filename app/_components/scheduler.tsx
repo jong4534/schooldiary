@@ -220,15 +220,29 @@ const Scheduler = ({ data }: SchedulerProps) => {
       <EditScheduleDialog open={editOpen} setOpen={setEditOpen} selectedSchedule={selectedSchedule} />
 
       {/* 헤더 영역 - 상단 패딩 축소 */}
-      <div className="flex justify-between items-center gap-2 pt-1 px-4 pb-4 border-b"> {/* pt-2로 상단 패딩 축소 */}
-        {/* 이전 달로 이동 버튼 */}
-        <Button onClick={prevMonth} size="sm">&lt;</Button>
-        {/* 현재 년도 및 월 표시 */}
-        <p className="font-medium text-lg">
-          {currentDate.getFullYear()}년 {currentDate.getMonth() + 1}월
-        </p>
-        {/* 다음 달로 이동 버튼 */}
-        <Button onClick={nextMonth} size="sm">&gt;</Button>
+      <div className="flex justify-center items-center gap-2 pt-1 px-4 pb-4">
+        <div className="flex items-center gap-4">
+          {/* 이전 달 버튼 */}
+          <Button 
+            onClick={prevMonth} 
+            size="sm" 
+            className="bg-gray-100 hover:bg-gray-200 text-gray-700 w-8 h-8 rounded-md p-0 shadow-none"
+          >
+            &lt;
+          </Button>
+          {/* 현재 년도 및 월 표시 */}
+          <p className="font-medium text-lg">
+            {currentDate.getFullYear()}년 {currentDate.getMonth() + 1}월
+          </p>
+          {/* 다음 달 버튼 */}
+          <Button 
+            onClick={nextMonth} 
+            size="sm" 
+            className="bg-gray-100 hover:bg-gray-200 text-gray-700 w-8 h-8 rounded-md p-0 shadow-none"
+          >
+            &gt;
+          </Button>
+        </div>
       </div>
       
       <div className="flex flex-col gap-1 w-full p-4">
