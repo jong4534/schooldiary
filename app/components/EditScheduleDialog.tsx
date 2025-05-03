@@ -53,6 +53,7 @@ export default function EditScheduleDialog({
       manager: selectedSchedule?.manager,
       meal: selectedSchedule?.meal,
       note: selectedSchedule?.note,
+      diary_id: selectedSchedule?.diary_id,
     },
   });
 
@@ -87,6 +88,7 @@ export default function EditScheduleDialog({
       form.setValue("manager", selectedSchedule.manager);
       form.setValue("meal", selectedSchedule.meal);
       form.setValue("note", selectedSchedule.note);
+      form.setValue("diary_id", selectedSchedule.diary_id);
     }
   }, [selectedSchedule]);
 

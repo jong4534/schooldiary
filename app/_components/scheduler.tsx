@@ -14,17 +14,20 @@ import { deleteSchoolActivity } from "@/serverAction/schoolActivity";
 // Scheduler 컴포넌트에 필요한 props 정의
 interface SchedulerProps {
   data: SelectSchoolActivity[]; // 교육 활동 데이터 배열
+  diaryId: string;
 }
 
 // Scheduler 컴포넌트 정의
-const Scheduler = ({ data }: SchedulerProps) => {
+const Scheduler = ({ data, diaryId }: SchedulerProps) => {
   const router = useRouter(); // Next.js 라우터 사용
   const [currentDate, setCurrentDate] = useState(new Date()); // 현재 날짜 상태
   const [open, setOpen] = useState(false); // 다이얼로그 상태 추가
   const [editOpen, setEditOpen] = useState(false);
-  const [selectedSchedule, setSelectedSchedule] = useState<SelectSchoolActivity>();
-  const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), "yyyy-MM-dd")); //내가 추가
-
+  const [selectedSchedule, setSelectedSchedule] =
+    useState<SelectSchoolActivity>();
+  const [selectedDate, setSelectedDate] = useState<string>(
+    format(new Date(), "yyyy-MM-dd")
+  ); //내가 추가
 
   // 현재 월의 일 수 계산
   const daysInMonth = new Date(
@@ -84,7 +87,9 @@ const Scheduler = ({ data }: SchedulerProps) => {
           </div>
         </div>
         <div className="flex gap-2 flex-[0.5]">
-          <div className="flex-1 flex items-center justify-center font-medium">비고</div>
+          <div className="flex-1 flex items-center justify-center font-medium">
+            비고
+          </div>
         </div>
       </div>
     );
@@ -96,7 +101,9 @@ const Scheduler = ({ data }: SchedulerProps) => {
         currentDate.getMonth(),
         day
       );
-      const dayOfWeek = ["일", "월", "화", "수", "목", "금", "토"][date.getDay()];
+      const dayOfWeek = ["일", "월", "화", "수", "목", "금", "토"][
+        date.getDay()
+      ];
       const isWeekend = dayOfWeek === "토" || dayOfWeek === "일"; // 주말 여부 확인
 
       // 날짜를 "00월 00일(월)" 형식으로 변환
@@ -110,7 +117,9 @@ const Scheduler = ({ data }: SchedulerProps) => {
       days.push(
         <div
           key={day}
-          className={`p-2 w-full border flex gap-2 ${isWeekend ? "bg-red-50" : ""}`} // 주말이면 배경색 변경
+          className={`p-2 w-full border flex gap-2 ${
+            isWeekend ? "bg-red-50" : ""
+          }`} // 주말이면 배경색 변경
         >
           <div className="border-r border-r-gray-200 px-2 w-[150px] flex items-center">
             <div className="flex items-center gap-1">
@@ -135,7 +144,10 @@ const Scheduler = ({ data }: SchedulerProps) => {
             {/* 교육활동 내용 영역 */}
             <div className="flex-1">
               {data.map((item) => {
-                if (item.start_date === `${formattedYear}-${formattedMonth}-${formattedDay}`) {
+                if (
+                  item.start_date ===
+                  `${formattedYear}-${formattedMonth}-${formattedDay}`
+                ) {
                   return (
                     <div key={item.id} className="flex rounded-md">
                       {/* ✅ 교육활동 내용 */}
@@ -147,17 +159,29 @@ const Scheduler = ({ data }: SchedulerProps) => {
                         }}
                       >
                         <span className="font-medium">{item.content}</span>
-                        {item.target && item.target.trim() !== '' && (
-                          <span className="text-muted-foreground text-sm"> | 대상: {item.target}</span>
+                        {item.target && item.target.trim() !== "" && (
+                          <span className="text-muted-foreground text-sm">
+                            {" "}
+                            | 대상: {item.target}
+                          </span>
                         )}
-                        {item.location && item.location.trim() !== '' && (
-                          <span className="text-muted-foreground text-sm"> | 장소: {item.location}</span>
+                        {item.location && item.location.trim() !== "" && (
+                          <span className="text-muted-foreground text-sm">
+                            {" "}
+                            | 장소: {item.location}
+                          </span>
                         )}
-                        {item.manager && item.manager.trim() !== '' && (
-                          <span className="text-muted-foreground text-sm"> | 담당자: {item.manager}</span>
+                        {item.manager && item.manager.trim() !== "" && (
+                          <span className="text-muted-foreground text-sm">
+                            {" "}
+                            | 담당자: {item.manager}
+                          </span>
                         )}
-                        {item.meal && item.meal.trim() !== '' && (
-                          <span className="text-muted-foreground text-sm"> | 급식: {item.meal}</span>
+                        {item.meal && item.meal.trim() !== "" && (
+                          <span className="text-muted-foreground text-sm">
+                            {" "}
+                            | 급식: {item.meal}
+                          </span>
                         )}
                       </div>
 
@@ -173,20 +197,20 @@ const Scheduler = ({ data }: SchedulerProps) => {
                         >
                           <LucideEdit />
                         </Button> */}
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          onClick={async (e) => {
-                            e.stopPropagation();
-                            if (window.confirm("정말로 삭제하시겠습니까?")) {
-                              await deleteSchoolActivity(item.id);
-                              router.refresh();
-                            }
-                          }}
-                        >
-                          <LucideTrash />
-                        </Button>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        onClick={async (e) => {
+                          e.stopPropagation();
+                          if (window.confirm("정말로 삭제하시겠습니까?")) {
+                            await deleteSchoolActivity(item.id);
+                            router.refresh();
+                          }
+                        }}
+                      >
+                        <LucideTrash />
+                      </Button>
 
                       {/* 비고 칸 */}
                       <div className="flex flex-[0.52] gap-1 items-center justify-start pr-2">
@@ -216,16 +240,21 @@ const Scheduler = ({ data }: SchedulerProps) => {
         setOpen={setOpen}
         selectedSchedule={selectedSchedule}
         selectedDate={selectedDate}
+        diaryId={diaryId}
       />
-      <EditScheduleDialog open={editOpen} setOpen={setEditOpen} selectedSchedule={selectedSchedule} />
+      <EditScheduleDialog
+        open={editOpen}
+        setOpen={setEditOpen}
+        selectedSchedule={selectedSchedule}
+      />
 
       {/* 헤더 영역 - 상단 패딩 축소 */}
       <div className="flex justify-center items-center gap-2 pt-1 px-4 pb-4">
         <div className="flex items-center gap-4">
           {/* 이전 달 버튼 */}
-          <Button 
-            onClick={prevMonth} 
-            size="sm" 
+          <Button
+            onClick={prevMonth}
+            size="sm"
             className="bg-gray-100 hover:bg-gray-200 text-gray-700 w-8 h-8 rounded-md p-0 shadow-none"
           >
             &lt;
@@ -235,19 +264,17 @@ const Scheduler = ({ data }: SchedulerProps) => {
             {currentDate.getFullYear()}년 {currentDate.getMonth() + 1}월
           </p>
           {/* 다음 달 버튼 */}
-          <Button 
-            onClick={nextMonth} 
-            size="sm" 
+          <Button
+            onClick={nextMonth}
+            size="sm"
             className="bg-gray-100 hover:bg-gray-200 text-gray-700 w-8 h-8 rounded-md p-0 shadow-none"
           >
             &gt;
           </Button>
         </div>
       </div>
-      
-      <div className="flex flex-col gap-1 w-full p-4">
-        {renderCalendar2()}
-      </div>
+
+      <div className="flex flex-col gap-1 w-full p-4">{renderCalendar2()}</div>
     </>
   );
 };

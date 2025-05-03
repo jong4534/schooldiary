@@ -11,6 +11,7 @@ export const SelectSchoolActivitySchema = z.object({
   manager: z.string().optional(),
   meal: z.string().optional(),
   note: z.string().optional(),
+  diary_id: z.string(),
   created_at: z.string(),
 });
 

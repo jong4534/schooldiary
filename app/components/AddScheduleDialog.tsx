@@ -39,6 +39,7 @@ interface AddScheduleDialogProps {
   setOpen: (open: boolean) => void;
   selectedSchedule: SelectSchoolActivity | undefined;
   selectedDate: string;
+  diaryId: string;
 }
 
 // 🏫 일정 추가 다이얼로그 컴포넌트
@@ -47,6 +48,7 @@ export default function AddScheduleDialog({
   setOpen,
   selectedSchedule,
   selectedDate,
+  diaryId,
 }: AddScheduleDialogProps) {
   const router = useRouter();
   const today = format(new Date(), "yyyy-MM-dd"); // 현재 날짜를 'YYYY-MM-DD' 형식으로 변환
@@ -64,6 +66,7 @@ export default function AddScheduleDialog({
       manager: "",
       meal: "",
       note: "",
+      diary_id: diaryId,
     },
   });
 
@@ -79,6 +82,7 @@ export default function AddScheduleDialog({
         manager: "",
         meal: "",
         note: "",
+        diary_id: diaryId,
       });
     }
   }, [selectedDate, open, form]);
@@ -245,7 +249,11 @@ export default function AddScheduleDialog({
             {/* 버튼 영역 */}
             <div className="flex justify-end gap-2 pt-2">
               <Button type="submit">추가</Button>
-              <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setOpen(false)}
+              >
                 닫기
               </Button>
             </div>

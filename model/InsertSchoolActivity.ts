@@ -10,6 +10,7 @@ export const InsertSchoolActivitySchema = z.object({
   manager: z.string().optional(),
   meal: z.string().optional(),
   note: z.string().optional(),
+  diary_id: z.string(),
 });
 
 export type InsertSchoolActivity = z.infer<typeof InsertSchoolActivitySchema>;

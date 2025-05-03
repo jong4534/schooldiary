@@ -1,15 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google"; // ✅ Google Fonts에서 Geist 폰트 가져오기
 import "./globals.css"; // ✅ 전역 CSS 가져오기
-import { AppSidebar } from "@/components/app-sidebar"; // ✅ 앱 사이드바 컴포넌트 가져오기
-import { MenuProvider } from "@/context/MenuContext"; // ✅ 메뉴 컨텍스트 제공
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"; // ✅ 사이드바 관련 UI
-import { Separator } from "@/components/ui/separator"; // ✅ 구분선 UI
-import HeaderBreadcrumb from "./components/header-breadcrumb"; // ✅ 헤더 내 Breadcrumb 컴포넌트 가져오기
 
 // 📌 Google Fonts: Geist Sans & Geist Mono 설정
 const geistSans = Geist({
@@ -35,27 +26,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko"> 
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <SidebarProvider> {/* ✅ 사이드바 관련 컨텍스트 제공 */}
-          <AppSidebar /> {/* ✅ 사이드바 추가 */}
-          
-          <SidebarInset>
-            {/* ✅ 헤더 영역 */}
-            <header className="flex h-16 shrink-0 items-center gap-2 border-b bg-white">
-              <div className="flex items-center gap-2 px-3">
-                <SidebarTrigger /> {/* ✅ 사이드바 토글 버튼 */}
-                <Separator orientation="vertical" className="mr-2 h-4" /> {/* ✅ 구분선 */}
-                <HeaderBreadcrumb /> {/* ✅ Breadcrumb 컴포넌트 (현재 페이지 위치 표시) */}
-              </div>
-            </header>
-
-            {/* ✅ 메인 컨텐츠 영역 */}
-            <div className="flex flex-1 flex-col gap-4 p-4">
-              <MenuProvider>{children}</MenuProvider> {/* ✅ MenuContext로 children 감싸기 */}
-            </div>
-          </SidebarInset>
-        </SidebarProvider>
+    <html lang="ko">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {children}
       </body>
     </html>
   );

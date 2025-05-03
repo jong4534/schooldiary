@@ -16,12 +16,15 @@ export async function createSchoolActivity(data: InsertSchoolActivity) {
   return newData;
 }
 
-export async function getSchoolActivity() {
+export async function getSchoolActivity(diaryId: string) {
   const supabase = await createClient();
-  const { data, error } = await supabase.from("school_activity").select("*");
-  
+  const { data, error } = await supabase
+    .from("school_activity")
+    .select("*")
+    .eq("diary_id", diaryId);
+
   if (error) throw new Error(error.message);
-  
+
   return data;
 
   // return 1;

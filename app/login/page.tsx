@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { createClient } from "@/utils/supabase/client";
+import Link from "next/link";
 
 const schema = z.object({
   email: z.string().email("유효한 이메일을 입력하세요."),
@@ -74,7 +75,9 @@ export default function LoginPage() {
             disabled={loading}
           />
           {errors.password && (
-            <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+            <p className="text-red-500 text-sm mt-1">
+              {errors.password.message}
+            </p>
           )}
         </div>
         <Button
@@ -85,6 +88,7 @@ export default function LoginPage() {
           {loading ? "로그인 중..." : "로그인"}
         </Button>
         {error && <p className="text-red-600 text-center mt-4">{error}</p>}
+        <Link href="/signup">회원가입</Link>
       </form>
     </div>
   );
