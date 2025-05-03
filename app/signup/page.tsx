@@ -16,13 +16,15 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
@@ -30,16 +32,17 @@ export default function LoginPage() {
   const onSubmit = async (data: FormData) => {
     setLoading(true);
     setError("");
+    setSuccess("");
     const supabase = createClient();
-    const { error: signInError } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signUp({
       email: data.email,
       password: data.password,
     });
-    if (signInError) {
-      setError(signInError.message);
+    if (error) {
+      setError(error.message);
     } else {
-      // 로그인 성공 시 원하는 페이지로 이동 등 처리
-      window.location.href = "/"; // 예시: 홈으로 이동
+      setSuccess("회원가입이 완료되었습니다! 이메일을 확인하세요.");
+      reset();
     }
     setLoading(false);
   };
@@ -50,7 +53,7 @@ export default function LoginPage() {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-8 rounded-lg shadow-md w-full max-w-md"
       >
-        <h2 className="text-2xl font-bold mb-6 text-center">로그인</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">회원가입</h2>
         <div className="mb-4">
           <Label htmlFor="email">이메일</Label>
           <Input
@@ -82,10 +85,11 @@ export default function LoginPage() {
           className="w-full bg-blue-600 hover:bg-blue-700 text-white"
           disabled={loading}
         >
-          {loading ? "로그인 중..." : "로그인"}
+          {loading ? "가입 중..." : "회원가입"}
         </Button>
         {error && <p className="text-red-600 text-center mt-4">{error}</p>}
+        {success && <p className="text-green-600 text-center mt-4">{success}</p>}
       </form>
     </div>
   );
-}
+} 
